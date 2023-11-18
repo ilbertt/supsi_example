@@ -1,5 +1,6 @@
 {
   "recommendations": [
-    "dfinity-foundation.vscode-motoko"
+    "dfinity-foundation.vscode-motoko",
+    "bradlc.vscode-tailwindcss"
   ]
 }

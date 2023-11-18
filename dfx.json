@@ -5,11 +5,7 @@
       "type": "motoko"
     },
     "frontend": {
-      "frontend": {
-        "entrypoint": "src/frontend/src/index.html"
-      },
       "source": [
-        "src/frontend/assets",
         "dist/frontend/"
       ],
       "type": "assets"
