@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "supsi_example_backend": {
+      "main": "src/supsi_example_backend/main.mo",
+      "type": "motoko"
+    },
+    "supsi_example_frontend": {
+      "dependencies": [
+        "supsi_example_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/supsi_example_frontend/src/index.html"
+      },
+      "source": [
+        "src/supsi_example_frontend/assets",
+        "dist/supsi_example_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
