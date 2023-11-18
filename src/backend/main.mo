@@ -1,10 +1,16 @@
 import Assets "mo:assets";
 import Types "mo:assets/Types";
+import Principal "mo:base/Principal";
 
 shared ({ caller = creator }) actor class () {
   stable var entries : Assets.SerializedEntries = ([], [creator]);
   let assets = Assets.Assets({
     serializedEntries = entries;
+  });
+
+  assets.authorize({
+    caller = creator;
+    other = Principal.fromBlob("\04"); // authorize anonymous principal
   });
 
   system func preupgrade() {

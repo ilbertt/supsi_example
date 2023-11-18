@@ -1,61 +1,52 @@
 import "./style.css"
-import { setupCounter } from "./counter.ts"
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-    <h1>Vite + TypeScript</h1>
-    <div class="bg-slate-700">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+import { AssetManager } from "@dfinity/assets";
+import { canisterId } from "../../declarations/backend";
+import { HttpAgent } from "@dfinity/agent";
 
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!)
+const host = process.env.DFX_NETWORK === "ic" ? "https://icp0.io" : "http://127.0.0.1:4943";
 
-// import { AssetManager } from "@dfinity/assets";
-// import { canisterId } from "../../declarations/backend";
-// import { HttpAgent } from "@dfinity/agent";
+const agent = new HttpAgent({
+  host,
+  verifyQuerySignatures: false,
+});
+agent.fetchRootKey();
 
-// const host = process.env.DFX_NETWORK === "ic" ? "https://icp0.io" : "http://127.0.0.1:4943";
+const assetManager = new AssetManager({
+  canisterId,
+  agent,
+});
 
-// const agent = new HttpAgent({
-//   host,
-// })
+assetManager.list().then((filesData) => {
+  console.log("Files:", filesData);
+});
 
-// const assetManager = new AssetManager({
-//   canisterId,
-//   agent,
-// });
+document.getElementById("uploadFileForm")!.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  console.log(e);
+  
+  await agent.fetchRootKey();
 
-// document.getElementById("uploadFileForm").addEventListener("submit", async (e) => {
-//   await agent.fetchRootKey();
+  const filePath = (e.target as HTMLFormElement)!.elements.namedItem("filePath")! as HTMLInputElement;
+  const fileObj = (e.target as HTMLFormElement)!.elements.namedItem("fileContent")! as HTMLInputElement;
+  const fileToUpload = fileObj.files![0];
 
-//   console.log(e, this);
+  console.log("filePath", filePath, "fileContent", fileObj);
 
-//   e.preventDefault();
+  const submitButton = (e.target as HTMLFormElement)!.querySelector("#uploadFileButton")!;
+  submitButton.classList.add("btn-disabled");
 
-//   const filePath = e.target.elements.filePath.value;
-//   const fileObj = e.target.elements.fileContent.files[0];
+  const key = await assetManager.store(fileToUpload, {
+    path: filePath.value,
+    contentType: fileObj.type,
+  });
 
-//   console.log("filePath", filePath, "fileContent", fileObj);
+  console.log("File key:", key);
 
-//   const button = e.target.querySelector("#submitUploadFileFormButton");
-//   button.setAttribute("disabled", true);
+  submitButton.classList.remove("btn-disabled");
 
-//   const key = await assetManager.store(fileObj, {
-//     path: filePath,
-//     contentType: fileObj.type,
-//   });
+  document.getElementById("uploadResult")!.innerText = "Done! Uploaded file at path: " + filePath;
 
-//   console.log("File key:", key);
-
-//   button.removeAttribute("disabled");
-
-//   document.getElementById("result").innerText = "Done! Uploaded file at path: " + filePath;
-
-//   return false;
-// });
+  return false;
+});
 
