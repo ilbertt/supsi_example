@@ -1,4 +1,4 @@
-import { supsi_example_backend } from "../../declarations/supsi_example_backend";
+import { backend } from "../../declarations/backend";
 
 document.querySelector("form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -9,7 +9,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   button.setAttribute("disabled", true);
 
   // Interact with foo actor, calling the greet method
-  const greeting = await supsi_example_backend.greet(name);
+  const greeting = await backend.greet(name);
 
   button.removeAttribute("disabled");
 
