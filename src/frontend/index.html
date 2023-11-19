@@ -153,8 +153,31 @@
           </form>
         </dialog>
       </div>
-      <div id="sync">
-        Sync content
+      <div id="sync" class="flex flex-col gap-4 md:gap-8 p-4 md:px-12">
+        <div class="flex justify-center gap-2">
+          <button class="btn btn-secondary" id="syncDataButton">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+            Sync data on canister
+          </button>
+        </div>
+        <div id="syncStatus" role="alert" class="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Last synced at: ...</span>
+        </div>
+        <div id="syncedDataContent" class="flex flex-col gap-2">
+          <h1>Current data on canister:</h1>
+          <pre class="bg-neutral rounded-md p-2 max-h-[700px] overflow-auto">
+            <!-- populated in javascript -->
+          </pre>
+        </div>
       </div>
     </div>
   </div>

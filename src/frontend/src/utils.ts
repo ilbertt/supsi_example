@@ -28,9 +28,11 @@ export const formatTimestamp = (timestamp: bigint) => {
   }).format(date);
 }
 
-export const setButtonLoading = (button: HTMLButtonElement) => {
+export const setButtonLoading = (button: HTMLButtonElement): string => {
   button.setAttribute("disabled", "true");
+  const oldContent = button.innerHTML;
   button.innerHTML = `<span class="loading loading-infinity loading-md"></span>`;
+  return oldContent;
 };
 
 export const removeButtonLoading = (button: HTMLButtonElement, text: string) => {

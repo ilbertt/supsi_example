@@ -3,7 +3,7 @@ import "./style.css"
 import { AssetManager } from "@dfinity/assets";
 import { canisterId as backendCanisterId } from "../../declarations/backend";
 import { HttpAgent } from "@dfinity/agent";
-import { checkAuthorization, fetchFilesAndPopulateTable, getActor, initializeActor } from "./api";
+import { checkAuthorization, fetchFilesAndPopulateTable, getActor, fetchSyncedData, initializeActor, syncDataOnCanister } from "./api";
 import { setAssetManager } from "./assetManager";
 import { formatFileSize, removeButtonLoading, setButtonLoading } from "./utils";
 import { getAuthClient, initializeAuthClient, login, logout } from "./identity";
@@ -34,9 +34,10 @@ const assetManager = new AssetManager({
 });
 setAssetManager(assetManager);
 
-initializeAuthClient().then(setAgentIdentity).then(checkAuthorization);
+initializeAuthClient().then(setAgentIdentity);
 
-fetchFilesAndPopulateTable();
+fetchFilesAndPopulateTable().then(checkAuthorization);
+fetchSyncedData();
 
 //// UI
 updateTabsUI();
@@ -67,6 +68,14 @@ document.getElementById("authButton")!.addEventListener("click", async () => {
   setAgentIdentity();
 
   await checkAuthorization();
+});
+
+const syncDataButton = document.getElementById("syncDataButton")! as HTMLButtonElement;
+syncDataButton.addEventListener("click", async () => {
+  const btnContent = setButtonLoading(syncDataButton);
+  await syncDataOnCanister();
+  await fetchSyncedData();
+  removeButtonLoading(syncDataButton, btnContent);
 });
 
 // forms

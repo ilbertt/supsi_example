@@ -132,3 +132,24 @@ export const checkAuthorization = async () => {
     }
   }
 };
+
+export const syncDataOnCanister = async () => {
+  await actor.sync_data();
+};
+
+type ParsedData = {
+  data: JSON;
+  lastSyncedAt: Date;
+};
+
+export const fetchSyncedData = async () => {
+  const syncedData = await actor.get_synced_data();
+  const parsedData: ParsedData = {
+    data: JSON.parse(syncedData.data),
+    lastSyncedAt: new Date(Number(BigInt(syncedData.last_synced_at) / BigInt(1_000_000))),
+  };
+  console.log("Synced data:", parsedData);
+
+  document.getElementById("syncStatus")!.querySelector("span")!.innerHTML = `Last synced at: ${formatTimestamp(BigInt(syncedData.last_synced_at))}`;
+  document.getElementById("syncedDataContent")!.querySelector("pre")!.innerHTML = JSON.stringify(parsedData.data, null, 4);
+};
