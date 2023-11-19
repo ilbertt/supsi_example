@@ -1,51 +1,98 @@
 <!doctype html>
 <html lang="en" data-theme="night">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SUPSI Example</title>
-  </head>
-  <body>
-    <div id="#app">
-      <!-- Navbar -->
-      <div class="navbar bg-base-100">
-        <div class="navbar-start">
-          <div class="dropdown">
-            <label tabindex="0" class="btn btn-ghost lg:hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-            </label>
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a>Documents</a></li>
-              <li><a>Sync</a></li>
-            </ul>
-          </div>
-          <a class="btn btn-ghost text-xl">SUPSI</a>
-        </div>
-        <div class="navbar-center hidden lg:flex">
-          <ul class="menu menu-horizontal px-1">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SUPSI Example</title>
+</head>
+
+<body>
+  <div id="#app">
+    <!-- Navbar -->
+    <div class="navbar bg-base-100">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <label tabindex="0" class="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </label>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li><a>Documents</a></li>
             <li><a>Sync</a></li>
           </ul>
         </div>
-        <div class="navbar-end">
-          <a class="btn btn-secondary" id="loginButton">Login</a>
-        </div>
+        <a class="btn btn-ghost text-xl">SUPSI</a>
       </div>
-      <div id="#content" class="flex justify-center">
-        <form id="uploadFileForm" class="join join-vertical gap-2">
-          <div class="form-control w-full max-w-xs">
-            <label class="label" for="filePath">
-              <span class="label-text">File path</span>
-            </label>
-            <input name="filePath" type="text" class="input input-bordered w-full max-w-xs" required />
-          </div>
-          <input name="fileContent" type="file" class="file-input file-input-bordered file-input-primary w-full max-w-xs" required />
-          <button class="btn btn-primary" id="uploadFileButton" type="submit">Upload</button>
-        </form>
-        <div id="uploadResult"></div>
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+          <li><a>Documents</a></li>
+          <li><a>Sync</a></li>
+        </ul>
+      </div>
+      <div class="navbar-end">
+        <a class="btn btn-accent" id="loginButton">Login</a>
       </div>
     </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <div id="content">
+      <div id="documents" class="flex flex-col gap-4 md:gap-8 p-4 md:px-12">
+        <div class="flex justify-center">
+          <button class="btn btn-secondary" id="uploadFileButton">Upload file</button>
+        </div>
+        <div>
+          <h1>Files</h1>
+          <div class="overflow-x-auto">
+            <table id="filesList" class="table table-zebra">
+              <thead>
+                <tr>
+                  <th>Path</th>
+                  <th>Type</th>
+                  <th>Size</th>
+                  <th>Last Modified</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- populated in javascript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <dialog id="uploadFileModal" class="modal">
+          <div class="modal-box">
+            <form method="dialog">
+              <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <div class="flex flex-col gap-4">
+              <h1>Upload file</h1>
+              <form id="uploadFileForm" class="join join-vertical gap-2">
+                <div class="form-control w-full">
+                  <label class="label" for="filePath">
+                    <span class="label-text">File path</span>
+                  </label>
+                  <input name="filePath" type="text" class="input input-bordered w-full" required />
+                </div>
+                <input name="fileContent" type="file"
+                  class="file-input file-input-bordered file-input-secondary w-full" required />
+                <button class="btn btn-secondary" id="uploadFileButton" type="submit">Upload</button>
+              </form>
+              <div id="uploadFileStatus" role="alert" class="alert hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>File uploaded!</span>
+              </div>
+            </div>
+          </div>
+          <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
