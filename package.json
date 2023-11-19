@@ -14,13 +14,15 @@
     "build": "tsc && vite build",
     "prebuild": "npm run generate",
     "start": "npm run dev",
-    "deploy:local": "dfx deploy --network=local",
+    "deploy:local": "dfx deps deploy && dfx deploy --network=local",
     "deploy:ic": "NODE_ENV=production dfx deploy --network=ic",
-    "generate": "dfx generate backend"
+    "generate": "dfx generate backend",
+    "app:authorize": "dfx canister call backend authorize"
   },
   "dependencies": {
     "@dfinity/agent": "^0.20.1",
     "@dfinity/assets": "^0.20.1",
+    "@dfinity/auth-client": "^0.20.1",
     "@dfinity/candid": "^0.20.1",
     "@dfinity/principal": "^0.20.1"
   },

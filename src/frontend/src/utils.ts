@@ -36,4 +36,31 @@ export const setButtonLoading = (button: HTMLButtonElement) => {
 export const removeButtonLoading = (button: HTMLButtonElement, text: string) => {
   button.removeAttribute("disabled");
   button.innerHTML = text;
+};
+
+export const setButtonUnauthorized = (button: HTMLButtonElement) => {
+  const parentEl = button.parentElement!;
+
+  const unauthorizedTooltip = document.createElement("div");
+  unauthorizedTooltip.classList.add("tooltip");
+  unauthorizedTooltip.setAttribute("data-tip", "You are not authorized");
+
+  button.setAttribute("disabled", "true");
+
+  unauthorizedTooltip.appendChild(button);
+
+  parentEl.appendChild(unauthorizedTooltip);
+};
+
+export const removeButtonUnauthorized = (button: HTMLButtonElement) => {
+  const tooltip = button.parentElement!;
+
+  if (tooltip.classList.contains("tooltip")) {
+    const parentEl = tooltip.parentElement!;
+    parentEl.appendChild(button);
+    parentEl.removeChild(tooltip);
+  
+    button.removeAttribute("disabled");
+  }
+
 }

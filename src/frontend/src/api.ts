@@ -1,5 +1,25 @@
-import { formatFileSize, formatTimestamp, removeButtonLoading, setButtonLoading } from "./utils";
+import { formatFileSize, formatTimestamp, removeButtonLoading, removeButtonUnauthorized, setButtonLoading, setButtonUnauthorized } from "./utils";
 import { getAssetManager } from "./assetManager";
+import { getAuthClient } from "./identity";
+import { ActorSubclass, Agent } from "@dfinity/agent";
+import { _SERVICE } from "../../declarations/backend/backend.did";
+import { createActor } from "../../declarations/backend";
+
+let actor: ActorSubclass<_SERVICE>;
+
+export const initializeActor = (canisterId: string, agent: Agent) => {
+  actor = createActor(canisterId, {
+    agent,
+  });
+};
+
+export const getActor = () => {
+  if (!actor) {
+    throw new Error("Actor not initialized");
+  }
+
+  return actor;
+};
 
 const downloadFile = async (button: HTMLButtonElement) => {
   const assetManager = getAssetManager();
@@ -89,5 +109,26 @@ const registerActionsHandlers = () => {
     button.addEventListener("click", (e) => {
       deleteFile((e.target as HTMLButtonElement));
     });
+  }
+};
+
+export const checkAuthorization = async () => {
+  const authClient = getAuthClient();
+  const principal = authClient.getIdentity().getPrincipal();
+
+  const isAuthorized = await actor.is_authorized(principal);
+
+  console.log("Is authorized:", isAuthorized);
+
+  const uploadFileButton = document.getElementById("uploadFileButton")! as HTMLButtonElement;
+  const authorizeButton = document.getElementById("authorizeButton")! as HTMLButtonElement;
+  const deleteFileButtons = document.querySelectorAll(".delete-file-button") as NodeListOf<HTMLButtonElement>;
+
+  for (const button of [...deleteFileButtons, uploadFileButton, authorizeButton]) {
+    if (isAuthorized) {
+      removeButtonUnauthorized(button);
+    } else {
+      setButtonUnauthorized(button);
+    }
   }
 };

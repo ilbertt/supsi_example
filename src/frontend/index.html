@@ -33,14 +33,36 @@
           <li><a>Sync</a></li>
         </ul>
       </div>
-      <div class="navbar-end">
-        <a class="btn btn-accent" id="loginButton">Login</a>
+      <div class="navbar-end gap-2">
+        <a class="btn btn-accent" id="authButton">Login</a>
       </div>
     </div>
     <div id="content">
+      <div id="principalBadgeContainer" class="justify-center gap-2 hidden">
+        Your principal: <div id="principalBadge" class="badge badge-accent h-6">Login to view</div>
+      </div>
       <div id="documents" class="flex flex-col gap-4 md:gap-8 p-4 md:px-12">
-        <div class="flex justify-center">
-          <button class="btn btn-secondary" id="uploadFileButton">Upload file</button>
+        <div class="flex justify-center gap-2">
+          <div>
+            <button class="btn btn-secondary" id="uploadFileButton">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+              </svg>
+              Upload file
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-secondary" id="authorizeButton">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+              </svg>
+              Authorize
+            </button>
+          </div>
         </div>
         <div>
           <h1>Files</h1>
@@ -75,13 +97,42 @@
                   </label>
                   <input name="filePath" type="text" class="input input-bordered w-full" required />
                 </div>
-                <input name="fileContent" type="file"
-                  class="file-input file-input-bordered file-input-secondary w-full" required />
-                <button class="btn btn-secondary" id="uploadFileButton" type="submit">Upload</button>
+                <input name="fileContent" type="file" class="file-input file-input-bordered file-input-secondary w-full"
+                  required />
+                <button class="btn btn-secondary" id="uploadFileSubmitButton" type="submit">Upload</button>
               </form>
               <div id="uploadFileStatus" role="alert" class="alert hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
                 <span>File uploaded!</span>
+              </div>
+            </div>
+          </div>
+          <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
+        <dialog id="authorizeModal" class="modal">
+          <div class="modal-box">
+            <form method="dialog">
+              <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <div class="flex flex-col gap-4">
+              <h1>Authorize principal</h1>
+              <form id="authorizeForm" class="join join-vertical gap-2">
+                <div class="form-control w-full">
+                  <label class="label" for="otherPrincipal">
+                    <span class="label-text">Principal to authorize</span>
+                  </label>
+                  <input name="otherPrincipal" type="text" class="input input-bordered w-full" required />
+                </div>
+                <button class="btn btn-secondary" id="authorizeSubmitButton" type="submit">Authorize</button>
+              </form>
+              <div id="authorizeStatus" role="alert" class="alert hidden">
+                <!-- populated in javascript -->
               </div>
             </div>
           </div>
