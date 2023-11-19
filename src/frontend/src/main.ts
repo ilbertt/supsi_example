@@ -86,6 +86,7 @@ document.getElementById("uploadFileForm")!.addEventListener("submit", async (e) 
     <span>Uploading file... <span id="uploadProgress">0/${formatFileSize(BigInt(fileToUpload.size))}</span></span>
     <progress class="progress w-56" value="0" max="100"></progress>
   `;
+  uploadFileStatus.classList.remove("alert-success");
   uploadFileStatus.classList.remove("hidden");
 
   const key = await assetManager.store(fileToUpload, {
@@ -138,9 +139,9 @@ document.getElementById("authorizeForm")!.addEventListener("submit", async (e) =
   const isAlreadyAuthorized = await getActor().is_authorized(otherPrincipal);
 
   if (isAlreadyAuthorized) {
-    authorizeStatus.classList.remove("hidden");
     authorizeStatus.classList.remove("alert-success");
     authorizeStatus.classList.add("alert-warning");
+    authorizeStatus.classList.remove("hidden");
 
     authorizeStatus.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -157,10 +158,9 @@ document.getElementById("authorizeForm")!.addEventListener("submit", async (e) =
 
   await getActor().authorize(otherPrincipal);
 
-  authorizeStatus.classList.remove("hidden");
-
   authorizeStatus.classList.remove("alert-warning");
   authorizeStatus.classList.add("alert-success");
+  authorizeStatus.classList.remove("hidden");
   authorizeStatus.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
       viewBox="0 0 24 24">
