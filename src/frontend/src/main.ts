@@ -8,6 +8,7 @@ import { setAssetManager } from "./assetManager";
 import { formatFileSize, removeButtonLoading, setButtonLoading } from "./utils";
 import { getAuthClient, initializeAuthClient, login, logout } from "./identity";
 import { Principal } from "@dfinity/principal";
+import { updateTabsUI } from "./tabs";
 
 /// Setup
 const host = process.env.DFX_NETWORK === "ic" ? "https://icp0.io" : "http://127.0.0.1:4943";
@@ -37,7 +38,9 @@ initializeAuthClient().then(setAgentIdentity).then(checkAuthorization);
 
 fetchFilesAndPopulateTable();
 
-//// UI handlers
+//// UI
+updateTabsUI();
+
 const uploadFileModal = document.getElementById("uploadFileModal")! as HTMLDialogElement;
 const authorizeModal = document.getElementById("authorizeModal")! as HTMLDialogElement;
 

@@ -28,10 +28,10 @@
         <a class="btn btn-ghost text-xl">SUPSI</a>
       </div>
       <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1">
-          <li><a>Documents</a></li>
-          <li><a>Sync</a></li>
-        </ul>
+        <div id="navbarTabs" role="tablist" class="tabs tabs-boxed">
+          <a role="tab" class="tab tab-active">Documents</a>
+          <a role="tab" class="tab">Sync</a>
+        </div>
       </div>
       <div class="navbar-end gap-2">
         <a class="btn btn-ghost" href="https://github.com/Luca8991/supsi_example" target="_blank"
@@ -50,10 +50,10 @@
       </div>
     </div>
     <div id="content">
-      <div id="principalBadgeContainer" class="justify-center gap-2 hidden">
-        Your principal: <div id="principalBadge" class="badge badge-accent h-6">Login to view</div>
-      </div>
       <div id="documents" class="flex flex-col gap-4 md:gap-8 p-4 md:px-12">
+        <div id="principalBadgeContainer" class="justify-center gap-2 hidden">
+          Your principal: <div id="principalBadge" class="badge badge-accent h-6">Login to view</div>
+        </div>
         <div class="flex justify-center gap-2">
           <div>
             <button class="btn btn-secondary" id="uploadFileButton">
@@ -152,6 +152,9 @@
             <button>close</button>
           </form>
         </dialog>
+      </div>
+      <div id="sync">
+        Sync content
       </div>
     </div>
   </div>
