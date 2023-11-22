@@ -80,6 +80,14 @@ The relevant parts of the code are:
 - [authorize a user](./src/frontend/src/main.ts#L171) (frontend), that authorizes a user
 - [login](./src/frontend/src/identity.ts#L35-L48) (frontend), that logs in the user
 
+Please note that you can also authorize a new user's principal using the command line:
+
+```bash
+npm run app:authorize -- <principal>
+```
+
+You'll need to do it when you deploy the canister for the first time and you want to manage files from the UI after logging in with your II.
+
 ### Sync
 
 This component enables you to sync your canister with external data available from an HTTP API. The UI is available at `http://127.0.0.1:4943/sync?canisterId={frontend_canister_id}`. It uses the native [HTTPS Outcalls](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/) feature of the Internet Computer.
