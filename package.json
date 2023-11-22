@@ -10,6 +10,7 @@
   ],
   "type": "module",
   "scripts": {
+    "postinstall": "npx mops install",
     "dev": "vite",
     "build": "tsc && vite build",
     "prebuild": "npm run generate",
@@ -35,6 +36,7 @@
     "dotenv": "^16.3.1",
     "events": "3.3.0",
     "html-webpack-plugin": "5.5.0",
+    "mops": "^3.0.2",
     "postcss": "^8.4.31",
     "process": "0.11.10",
     "stream-browserify": "3.0.0",
